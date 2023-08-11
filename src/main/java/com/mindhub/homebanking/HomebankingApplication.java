@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
@@ -25,68 +26,30 @@ public class HomebankingApplication {
 	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository) {
 		return (args) -> {
-			Client melba = new Client("Melba", "Morel", "melba@mindhub.com");
+
+			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com");
 			Account account1 = new Account("VIN001", LocalDate.now(), 5000);
 			Account account2 = new Account("VIN002", LocalDate.now().plusDays(1), 7000);
-
+			account1.setClient(client1);
+			account2.setClient(client1);
+			client1.addAccount(account1);
+			client1.addAccount(account2);
 			Account account3 = new Account("VIN003", LocalDate.now(), 8000);
-
-			account1.setClient(melba);
-			account2.setClient(melba);
-
-
-			melba.addAccount(account1);
-			melba.addAccount(account2);
-
-
-
-
-			Client juan = new Client("Juan", "Lozano", "juanlozano@gmail.com");
-			account3.setClient(juan);
-
-
-
-			Transaction tmelba1=new Transaction(TransactionType.DEBIT,770,"Merpago*mcdonalds", LocalDateTime.now());
-			Transaction tmelba2=new Transaction(TransactionType.DEBIT,1000,"Merpago*shel", LocalDateTime.now());
-			Transaction tmelba3=new Transaction(TransactionType.DEBIT,1000,"CIC -Lomas", LocalDateTime.now());
-			Transaction tmelba4=new Transaction(TransactionType.CREDIT,3000,"Transf. Recibida", LocalDateTime.now());
-
-			Transaction tjuan1=new Transaction(TransactionType.CREDIT,30000,"Dep Sueldo", LocalDateTime.now());
-
-			account1.addTransaction(tmelba1);
-			account1.addTransaction(tmelba2);
-			account2.addTransaction(tmelba3);
-			account2.addTransaction(tmelba4);
-
-			account3.addTransaction(tjuan1);
-
-			clientRepository.save(melba);
-
-			clientRepository.save(juan);
-
-			accountRepository.save(account1);
-			accountRepository.save(account2);
-			accountRepository.save(account3);
-
-
-
-
-			transactionRepository.save(tmelba1);
-			transactionRepository.save(tmelba2);
-			transactionRepository.save(tmelba3);
-			transactionRepository.save(tmelba4);
-			transactionRepository.save(tjuan1);
-
-
-
-
-
-
-
-
-
-
-
+			Client client2 = new Client("Juan", "Lozano", "juanlozano@gmail.com");
+			account3.setClient(client2);
+			Transaction transaction1=new Transaction(TransactionType.DEBIT,770,"Merpago*mcdonalds", LocalDateTime.now());
+			Transaction transaction2=new Transaction(TransactionType.DEBIT,1000,"Merpago*shel", LocalDateTime.now());
+			Transaction transaction3=new Transaction(TransactionType.DEBIT,1000,"CIC -Lomas", LocalDateTime.now());
+			Transaction transaction4=new Transaction(TransactionType.CREDIT,3000,"Transf. Recibida", LocalDateTime.now());
+			Transaction transaction5=new Transaction(TransactionType.CREDIT,30000,"Dep Sueldo", LocalDateTime.now());
+			account1.addTransaction(transaction1);
+			account1.addTransaction(transaction2);
+			account2.addTransaction(transaction3);
+			account2.addTransaction(transaction4);
+			account3.addTransaction(transaction5);
+			clientRepository.saveAll(List.of(client1,client2));
+			accountRepository.saveAll(List.of(account1,account2,account3));
+			transactionRepository.saveAll(List.of(transaction1,transaction2,transaction3,transaction4,transaction5));
 		};
 	}
 }

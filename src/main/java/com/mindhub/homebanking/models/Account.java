@@ -30,55 +30,46 @@ public class Account {
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
-
-
     }
 
+    public long getId() {
+        return id;
+    }
     public String getNumber() {
         return number;
     }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public LocalDate getCreationDate() {
         return creationDate;
-    }
-
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
     }
 
     public double getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
-        balance = balance;
-    }
-
     public Client getClient() {return client;}
+    public Set<Transaction> getTransactions() {return transactions;}
 
-    public void setClient(Client client) {
-        this.client = client;
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public long getId() {
-        return id;
-    }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public Set<Transaction> getTransactions() {
-        return transactions;
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
+    public void setBalance(double balance) {
+        balance = balance;
     }
+
+    public void setTransactions(Set<Transaction> transactions) {this.transactions = transactions;}
+
+    public void setClient(Client client) {this.client = client;}
 
     public void addTransaction(Transaction transaction){
         transaction.setAccount(this);

@@ -24,27 +24,10 @@ public class TransactionDTO {
 
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public TransactionType getType() {
-        return type;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
+    public Long getId() {return id;}
+    public TransactionType getType() {return type;}
+    public double getAmount() {return amount;}
+    public String getDescription() {return description;}
+    public LocalDateTime getDate() {return date;}
+    public Account getAccount() {return account;}
 }
