@@ -5,18 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-<<<<<<< Updated upstream
-
-=======
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
->>>>>>> Stashed changes
+
 @Entity
 public class Client {
 
@@ -27,64 +23,45 @@ public class Client {
     private String firstName;
     private String lastName;
     private String email;
-<<<<<<< Updated upstream
-=======
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
 
-    @OneToMany(mappedBy = "client",fetch=FetchType.EAGER)
-    private Set<ClientLoan> loans = new HashSet<>();
->>>>>>> Stashed changes
-
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<ClientLoan> clientLoans = new HashSet<>();
     public Client() { }
-
     public Client (String first, String last,String email) {
         this.firstName = first;
         this.lastName = last;
         this.email=email;
     }
 
-    public long getId() {
-        return id;
+    public long getId() {return id;}
+    public Set<Account> getAccounts() {
+        return accounts;
     }
-<<<<<<< Updated upstream
-=======
     public String getFirstName() {return firstName;}
     public String getLastName() {return lastName;}
     public String getEmail() {return email;}
-    public List<Loan> getLoans() {return loans.stream().map(sub -> sub.getLoan()).collect(toList());}
-    public Set<ClientLoan> getClientLoans() {return loans;}
 
+    public Set<ClientLoan> getClientLoans() {return clientLoans;}
     public void setAccounts(Set<Account> accounts) {this.accounts = accounts;}
     public void setFirstName(String firstName) {this.firstName = firstName;}
     public void setLastName(String lastName) {this.lastName = lastName;}
->>>>>>> Stashed changes
 
-    public String getFirstName() {
-        return firstName;
+    public void setEmail(String email) {this.email = email;}
+    public void addAccount(Account account) {
+        account.setClient(this);
+        this.accounts.add(account);
+    }
+    public void addClientLoan(ClientLoan clientLoan) {
+        clientLoan.setClient(this);
+        clientLoans.add(clientLoan);
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 
-    public String getLastName() {
-        return lastName;
-    }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
     public void setClientLoans(Set<ClientLoan> clientLoans) {
-        this.loans = clientLoans;
+        this.clientLoans = clientLoans;
     }
 
     public String toString() {

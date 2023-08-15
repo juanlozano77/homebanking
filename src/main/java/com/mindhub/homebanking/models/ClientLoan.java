@@ -39,30 +39,29 @@ public class ClientLoan {
         return client;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
 
     public Loan getLoan() {
         return loan;
-    }
-
-    public void setLoan(Loan loan) {
-        this.loan = loan;
     }
 
     public double getAmount() {
         return amount;
     }
 
+    public int getPayments() {
+        return payments;
+    }
     public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    public int getPayments() {
-        return payments;
+    public void setLoan(Loan loan) {
+        this.loan = loan;
     }
 
+    public void setClient(Client client) {
+        this.client = client;
+    }
     public void setPayments(int payments) {
         this.payments = payments;
     }

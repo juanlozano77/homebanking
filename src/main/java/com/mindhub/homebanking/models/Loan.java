@@ -1,4 +1,5 @@
 package com.mindhub.homebanking.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -35,14 +36,17 @@ public class Loan {
         this.payments = payments;
     }
 
-    public long getId() {return id;}
+    public long getId() {
+        return id;
+    }
 
-    public String getName() {return name;}
+    public String getName() {
+        return name;
+    }
 
-    public double getMaxAmount() {return maxAmount;}
-
-
-    public List<Integer> getPayments() {return payments;}
+    public List<Integer> getPayments() {
+        return payments;
+    }
 
     public List<Client> getClients() {
         return clientLoans.stream().map(ClientLoan::getClient).collect(toList());
@@ -51,12 +55,27 @@ public class Loan {
     public Set<ClientLoan> getClientLoans() {
         return clientLoans;
     }
-    public void setName(String name) {this.name = name;}
 
-    public void setMaxAmount(double maxAmount) {this.maxAmount = maxAmount;}
 
-    public void setPayments(List<Integer> payments) {this.payments = payments;}
+    public double getMaxAmount() {
+        return maxAmount;
+    }
 
-    public void setClientLoans(Set<ClientLoan> clientLoans) {this.clientLoans = clientLoans;}
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMaxAmount(double maxAmount) {
+        this.maxAmount = maxAmount;
+    }
+
+    public void setPayments(List<Integer> payments) {
+        this.payments = payments;
+    }
+
+
+    public void setClientLoans(Set<ClientLoan> clientLoans) {
+        this.clientLoans = clientLoans;
+    }
 }
 
