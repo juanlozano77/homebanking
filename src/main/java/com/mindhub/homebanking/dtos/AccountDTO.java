@@ -11,10 +11,8 @@ public class AccountDTO {
     private String number;
     private LocalDate creationDate;
     private double balance;
-
     private Set<TransactionDTO> transactions = new HashSet<>();
 
-    public AccountDTO(){}
     public AccountDTO(Account account) {
        this.id=account.getId();
        this.number= account.getNumber();

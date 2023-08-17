@@ -16,11 +16,7 @@ public class ClientDTO {
     private String email;
     private Set<AccountDTO> accounts = new HashSet<>();
     private List<ClientLoanDTO> loans = new ArrayList<>();
-
     private Set<CardDTO> cards = new HashSet<>();
-    public ClientDTO() {
-        //
-    }
     public ClientDTO(Client client) {
         this.id = client.getId();
         this.firstName = client.getFirstName();
