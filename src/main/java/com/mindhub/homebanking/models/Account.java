@@ -63,9 +63,7 @@ public class Account {
         this.creationDate = creationDate;
     }
 
-    public void setBalance(double balance) {
-        balance = balance;
-    }
+    public void setBalance(double balance){this.balance = balance;}
 
     public void setTransactions(Set<Transaction> transactions) {this.transactions = transactions;}
 
