@@ -39,7 +39,6 @@ public class HomebankingApplication {
 			Account account3 = new Account("VIN003", LocalDate.now(), 8000);
 			Client client2 = new Client("Juan", "Perez", "juanperez@mindhub.com",passwordEncoder.encode("1234"));
 			Client admin=new Client("Juan", "Lozano", "admin@mindhub.com",passwordEncoder.encode("admin"));
-			admin.setAdmin(true);
 			account3.setClient(client2);
 			Loan loan1 = new Loan("Hipotecario", 500000, Arrays.asList(12, 24, 36, 48, 60));
 			Loan loan2 = new Loan("Personal", 100000, Arrays.asList(6, 12, 24));

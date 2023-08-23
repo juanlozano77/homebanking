@@ -48,8 +48,6 @@ public class Client {
     public Set<Card> getCards() {return cards;}
     public Set<ClientLoan> getClientLoans() {return clientLoans;}
 
-    public boolean isAdmin() {return isAdmin;}
-
     public String getPassword() {return password;}
 
     public void setAccounts(Set<Account> accounts) {this.accounts = accounts;}
@@ -59,8 +57,6 @@ public class Client {
     public void setEmail(String email) {this.email = email;}
 
     public void setPassword(String password) {this.password = password;}
-
-    public void setAdmin(boolean admin) {isAdmin = admin;}
 
     public void addAccount(Account account) {
         account.setClient(this);
