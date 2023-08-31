@@ -35,7 +35,7 @@ public class CardController {
 
         Client currentClient = repoClient.findByEmail(authentication.getName());
 
-        if (currentClient.getCards().size() >= 3) {
+        if (currentClient.getCards().stream().filter( card -> card.getType().equals(cardType)).count() >= 3) {
             return new ResponseEntity<>("Already 3 cards", HttpStatus.FORBIDDEN);
         }
         String cardNumber;
