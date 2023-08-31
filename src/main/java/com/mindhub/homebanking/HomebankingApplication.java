@@ -65,17 +65,9 @@ public class HomebankingApplication {
 			client1.addCard(card2);
 			client2.addCard(card3);
 
-
-
-
-
-
-
-
-
-			Transaction transaction1=new Transaction(TransactionType.DEBIT,770,"Merpago*mcdonalds", LocalDateTime.now());
-			Transaction transaction2=new Transaction(TransactionType.DEBIT,1000,"Merpago*shel", LocalDateTime.now());
-			Transaction transaction3=new Transaction(TransactionType.DEBIT,1000,"CIC -Lomas", LocalDateTime.now());
+			Transaction transaction1=new Transaction(TransactionType.DEBIT,-770,"Merpago*mcdonalds", LocalDateTime.now());
+			Transaction transaction2=new Transaction(TransactionType.DEBIT,-1000,"Merpago*shel", LocalDateTime.now());
+			Transaction transaction3=new Transaction(TransactionType.DEBIT,-1000,"CIC -Lomas", LocalDateTime.now());
 			Transaction transaction4=new Transaction(TransactionType.CREDIT,3000,"Transf. Recibida", LocalDateTime.now());
 			Transaction transaction5=new Transaction(TransactionType.CREDIT,30000,"Dep Sueldo", LocalDateTime.now());
 			account1.addTransaction(transaction1);
