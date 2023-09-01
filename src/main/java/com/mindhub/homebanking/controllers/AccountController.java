@@ -44,6 +44,12 @@ public class AccountController {
     public ResponseEntity<Object> createAccount(Authentication authentication) {
         Client currentClient = repoClient.findByEmail(authentication.getName());
 
+
+        if (currentClient == null) {
+            return new ResponseEntity<>("Clients doesnt exist", HttpStatus.FORBIDDEN);
+        }
+
+
         if (currentClient.getAccounts().size() >= 3) {
             return new ResponseEntity<>("Already 3 accounts", HttpStatus.FORBIDDEN);
         }

@@ -63,9 +63,9 @@ public class TransactionController {
             return new ResponseEntity<>("The amount is greater than the account balance", HttpStatus.FORBIDDEN);
         }
 
-        Transaction transactionDebit=new Transaction(TransactionType.DEBIT,-amount,description, LocalDateTime.now());
+        Transaction transactionDebit=new Transaction(TransactionType.DEBIT,-amount,description+" "+accountTo.getNumber(), LocalDateTime.now());
 
-        Transaction transactionCredit=new Transaction(TransactionType.CREDIT,amount,description, LocalDateTime.now());
+        Transaction transactionCredit=new Transaction(TransactionType.CREDIT,amount,description+" "+accountFrom.getNumber(), LocalDateTime.now());
 
         accountFrom.addTransaction(transactionDebit);
         accountTo.addTransaction(transactionCredit);
