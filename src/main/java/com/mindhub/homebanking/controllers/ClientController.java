@@ -3,11 +3,11 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +25,12 @@ public class ClientController {
     private ClientRepository repo;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AccountController accountController;
+
+    @Autowired
+    private AccountRepository repoAccount;
 
     @RequestMapping("/clients")
     public List<ClientDTO> getClients() {
@@ -77,10 +83,14 @@ public class ClientController {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
 
         }
-        repo.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
+        String accountNumber=accountController.generateAccountNumber();
+        Account newAccount = new Account(accountNumber, LocalDate.now(), 0);
 
-
-
+        Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
+        newAccount.setClient(client);
+        client.addAccount(newAccount);
+        repo.save(client);
+        repoAccount.save(newAccount);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 

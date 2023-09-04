@@ -65,7 +65,7 @@ public class AccountController {
 
 
     }
-    private String generateAccountNumber() {
+    public String generateAccountNumber() {
         String accountNumber;
         do {
             int randomNumber = (int) (Math.random() * 99999999) + 1;

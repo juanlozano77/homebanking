@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
@@ -41,10 +42,20 @@ public class TransactionController {
         if (amount<=0){
             return new ResponseEntity<>("Amount must be greater than 0", HttpStatus.FORBIDDEN);
         }
+        List<String> missingFields = new ArrayList<>();
 
-        if (fromAccountNumber.isEmpty() || toAccountNumber.isEmpty() || description.isEmpty()) {
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+        if (fromAccountNumber == null || fromAccountNumber.isBlank()) {
+            return new ResponseEntity<>("Missing from Account Number", HttpStatus.FORBIDDEN);
         }
+
+        if (toAccountNumber == null || toAccountNumber.isBlank()) {
+            return new ResponseEntity<>("Missing to Account Number", HttpStatus.FORBIDDEN);
+        }
+
+        if (description == null || description.isBlank()) {
+            return new ResponseEntity<>("Missing description", HttpStatus.FORBIDDEN);
+        }
+
         if (fromAccountNumber.equals(toAccountNumber)) {
             return new ResponseEntity<>("Same Accounts", HttpStatus.FORBIDDEN);
         }
