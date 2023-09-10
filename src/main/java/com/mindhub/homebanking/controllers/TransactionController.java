@@ -1,34 +1,28 @@
 package com.mindhub.homebanking.controllers;
-import com.mindhub.homebanking.dtos.AccountDTO;
-import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api")
 public class TransactionController {
     @Autowired
-    private TransactionRepository repo;
+    private TransactionService transactionService;
     @Autowired
-    private ClientRepository repoClient;
+    private ClientService clientService;
 
     @Autowired
 
-    private AccountRepository repoAccount;
+    private AccountService accountService;
 
     @Transactional
     @PostMapping("/transactions")
@@ -37,7 +31,7 @@ public class TransactionController {
                                                 @RequestParam Double amount, @RequestParam String description) {
 
 
-        Client currentClient = repoClient.findByEmail(authentication.getName());
+        Client currentClient =clientService.getClientByEmail(authentication.getName());
 
         if (amount<=0){
             return new ResponseEntity<>("Amount must be greater than 0", HttpStatus.FORBIDDEN);
@@ -59,8 +53,9 @@ public class TransactionController {
         if (fromAccountNumber.equals(toAccountNumber)) {
             return new ResponseEntity<>("Same Accounts", HttpStatus.FORBIDDEN);
         }
-        Account accountFrom = repoAccount.findByNumber(fromAccountNumber);
-        Account accountTo=repoAccount.findByNumber(toAccountNumber);
+        Account accountFrom = accountService.getByNumber(fromAccountNumber);
+
+        Account accountTo=accountService.getByNumber(toAccountNumber);
         if (accountFrom==null){
             return new ResponseEntity<>("The source account does not exist ", HttpStatus.FORBIDDEN);
         }
@@ -74,17 +69,7 @@ public class TransactionController {
             return new ResponseEntity<>("The amount is greater than the account balance", HttpStatus.FORBIDDEN);
         }
 
-        Transaction transactionDebit=new Transaction(TransactionType.DEBIT,-amount,description+" "+accountTo.getNumber(), LocalDateTime.now());
-
-        Transaction transactionCredit=new Transaction(TransactionType.CREDIT,amount,description+" "+accountFrom.getNumber(), LocalDateTime.now());
-
-        accountFrom.addTransaction(transactionDebit);
-        accountTo.addTransaction(transactionCredit);
-
-        repoAccount.save(accountFrom);
-        repoAccount.save(accountTo);
-        repo.save(transactionDebit);
-        repo.save(transactionCredit);
+        transactionService.createTransaction(accountFrom,accountTo,amount,description);
 
         return new ResponseEntity<>("Transaction created!", HttpStatus.CREATED);
 
