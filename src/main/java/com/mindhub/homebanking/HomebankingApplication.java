@@ -16,14 +16,14 @@ import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	/*@Autowired
+	private PasswordEncoder passwordEncoder;*/
 
 	public static void main(String[] args) {
 
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
-
+    /*
 	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository,
 									  LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository)    {
@@ -83,5 +83,5 @@ public class HomebankingApplication {
 			accountRepository.saveAll(List.of(account1,account2,account3));
 			transactionRepository.saveAll(List.of(transaction1,transaction2,transaction3,transaction4,transaction5));
 		};
-	}
+	}*/
 }
