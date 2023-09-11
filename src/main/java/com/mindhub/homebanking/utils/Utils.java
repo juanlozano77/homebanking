@@ -10,12 +10,10 @@ public class Utils {
     private ClientService clientService;
     @Autowired
     private AccountRepository accountRepository;
-    public static String generateAccountNumber(AccountRepository accountRepository) {
+    public static String generateAccountNumber() {
         String accountNumber;
-        do {
-            int randomNumber = (int) (Math.random() * 99999999) + 1;
-            accountNumber = "VIN" + randomNumber;
-        } while (accountRepository.findByNumber(accountNumber) != null);
+        int randomNumber = (int) (Math.random() * 99999999) + 1;
+        accountNumber = "VIN" + randomNumber;
         return accountNumber;
     }
     public static int generateNumber(int digit) {
@@ -23,6 +21,10 @@ public class Utils {
         number = (int) (Math.random() * Math.pow(10, digit)) + 1;
         return number;
     }
+    public static int generateCvv() {
+        return generateNumber(3);
+    }
+
     public static String generateCardNumber() {
         StringBuilder formattedNumber = new StringBuilder();
         for (int i = 0; i < 4; i++) {

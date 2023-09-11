@@ -48,7 +48,11 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void registerClient(String firstName, String lastName, String email, String password){
-        Account newAccount = new Account(generateAccountNumber(accountRepository), LocalDate.now(),0);
+        String accountNumber;
+        do {
+            accountNumber=generateAccountNumber();
+        } while (accountRepository.findByNumber(accountNumber) != null);
+        Account newAccount = new Account(accountNumber, LocalDate.now(),0);
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         client.addAccount(newAccount);
         this.saveClient(client);

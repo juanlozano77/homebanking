@@ -33,7 +33,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void create(Authentication authentication, Client currentClient) {
-        Account newAccount = new Account(generateAccountNumber(accountRepository), LocalDate.now(),0);
+        String accountNumber;
+        do {
+            accountNumber=generateAccountNumber();
+        } while (accountRepository.findByNumber(accountNumber) != null);
+        Account newAccount = new Account(accountNumber, LocalDate.now(),0);
         currentClient.addAccount(newAccount);
         clientService.saveClient(currentClient);
         this.save(newAccount);

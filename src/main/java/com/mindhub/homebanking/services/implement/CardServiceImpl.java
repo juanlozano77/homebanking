@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.Set;
 
-import static com.mindhub.homebanking.utils.Utils.generateCardNumber;
-import static com.mindhub.homebanking.utils.Utils.generateNumber;
+import static com.mindhub.homebanking.utils.Utils.*;
 import static java.util.stream.Collectors.toSet;
 
 @Service
@@ -48,7 +47,7 @@ public class CardServiceImpl implements CardService {
         do {
             cardNumber = generateCardNumber();
         } while (this.getAccountByNumber(cardNumber)!=null);
-        int cvv=generateNumber(3);
+        int cvv=generateCvv();
         Card newCard = new Card(currentClient.toString(), cardType, cardColor, cardNumber, cvv, LocalDate.now(), LocalDate.now().plusYears(5));
         newCard.setClient(currentClient);
         this.saveCard(newCard);
