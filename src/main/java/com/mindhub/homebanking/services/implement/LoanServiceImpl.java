@@ -42,8 +42,6 @@ public class LoanServiceImpl implements LoanService {
         ClientLoan clientLoan=new ClientLoan(currentClient,currentLoan,loanAplicationDTO.getAmount()*1.2,loanAplicationDTO.getPayments());
         Transaction transaction=new Transaction(TransactionType.CREDIT,loanAplicationDTO.getAmount(),currentLoan.getName()+" Loan Aprobed", LocalDateTime.now());
         accountDest.addTransaction(transaction);
-        currentClient.addClientLoan(clientLoan);
-
         transactionService.saveTransaction(transaction);
         accountService.save(accountDest);
         clientService.saveClient(currentClient);
